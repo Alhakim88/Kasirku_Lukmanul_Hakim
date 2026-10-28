@@ -8,3 +8,4 @@ Catatan Error :
 - Source : bootstrap-icons.css:1
 
 Perbaikannya:
+- menggunakan cdn pada bootstrap icons

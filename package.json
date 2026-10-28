@@ -1,5 +1,29 @@
 {
   "dependencies": {
     "bootstrap-icons": "^1.13.2"
-  }
+  },
+  "name": "0-kasirku",
+  "version": "1.0.0",
+  "description": "Link Github Page : https://alhakim88.github.io/Kasirku_Lukmanul_Hakim/",
+  "main": "src/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alhakim88/Kasirku_Lukmanul_Hakim.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Alhakim88/Kasirku_Lukmanul_Hakim/issues"
+  },
+  "homepage": "https://github.com/Alhakim88/Kasirku_Lukmanul_Hakim#readme"
 }
