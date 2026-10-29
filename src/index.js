@@ -59,66 +59,97 @@
 // console.log(formatRupiah(product.hargaJual));
 // console.log(hargaMargin(product.hargaJual, product.hargaBeli));
 
-console.log("==================================================");
-console.log("LAPORAN HARIAN POS: Toko Berkah Warung (kasirku)");
-console.log("Kasir Bertugas: Lukmanul Hakim");
-console.log("==================================================");
-
-// DATA PRODUK
-const daftarProduk = [
+import { stdin as input, stdout as output } from "node:process";
+import * as readline from "node:readline/promises";
+// console.log (MenjalankanNode());
+const rl = readline.createInterface({ input, output });
+const daftar = [
   {
-    nama: "Minyak Goreng Sania 2L",
-    hargaBeli: 33000,
-    hargaJual: 37000,
-    stock: 5,
-    batasMin: 5,
+    nama: "Teh Celup",
+    harga: 5000,
   },
   {
-    nama: "Beras Remos 5Kg",
-    hargaBeli: 65000,
-    hargaJual: 72000,
-    stock: 1,
-    batasMin: 5,
-  },
-  {
-    nama: "Gula Pasir 1Kg",
-    hargaBeli: 14000,
-    hargaJual: 16000,
-    stock: 3,
-    batasMin: 5,
+    nama: "Coca-cola",
+    harga: 8000,
   },
 ];
 
-// FUNCTION FORMAT RUPIAH
-function formatRupiah(angka) {
-  return `Rp. ${angka.toLocaleString("id-ID")}`;
-}
+console.table(daftar);
+let pilihYa;
+do {
+  pilihYa = await rl.question("Pilih Menu :");
+  switch (pilihYa) {
+    case "1":
+      // TAMBAH
+      const nama = await rl.question("Nama Produk : ");
+      if (nama === "") {
+        console.log(`Isi duku nama Produk!`);
+        break;
+      }
+      let harga = 0;
+      while (true) {
+        let hargaString = await rl.question("Harga Produk : ");
+        harga = Number(hargaString);
+        if (hargaString.trim() !== "" && !isNaN(harga) && harga > 0) {
+         // console.log(`Isi dulu harga atau harga tidak boleh minus!`); 
+          break;
+        }
+        console.log(`Harga gagal ter Input`);
+      }
+      daftar.push({ nama, harga });
+      console.log(`Berhasil Bertambah!`);
+      // console.table(daftar);
+      break; // ..........................
+    case "2":
+      // LIHAT
+      console.table(daftar);
+      break;
+    case "3":
+      // CARI
+      const cari = await rl.question("Ketik yg dicari : ");
+      let ketemu = 0;
+      for (const d of daftar) {
+        if (d.nama.toLocaleLowerCase().includes(cari.toLocaleLowerCase())) {
+          console.table({
+            nama: d.nama,
+            harga: d.harga,
+          });
+          ketemu++;
+        }
+      }
+      if (ketemu === 0) {
+        console.log(`Data tidak ditemukan!`);
+      }
+      break;
+    case "4":
+      // KELUAR
+      console.log(`Se u by ...`);
+      break;
 
-// VARIABEL LAPORAN
-let totalAset = 0;
-let barangPerhatian = 0;
-
-// LOOPING PRODUK
-for (const produk of daftarProduk) {
-  const margin = produk.hargaJual - produk.hargaBeli;
-  const status = produk.stock <= produk.batasMin ? "Perlu Restock" : "Aman";
-
-  // Total aset berdasarkan harga beli x stok
-  totalAset += produk.hargaBeli * produk.stock;
-
-  if (status === "Perlu Restock") {
-    barangPerhatian++;
+    default:
+      console.log(`Pilihan tidak dikenal`);
+      break;
   }
+} while (pilihYa !== "4");
+rl.close();
 
-  console.log(`Produk\t\t: ${produk.nama}`);
-  console.log(
-    `Harga Jual\t: ${formatRupiah(produk.hargaJual)} (Margin: ${formatRupiah(margin)})`,
-  );
-  console.log(`Stok Gudang\t: ${produk.stock} unit | Status: ${status}`);
-  console.log("--------------------------------------------------");
-}
-
-// RINGKASAN LAPORAN
-console.log(`Total Estimasi Aset Toko: ${formatRupiah(totalAset)}`);
-console.log(`Barang Butuh Perhatian\t: ${barangPerhatian} item`);
-console.log("==================================================");
+// let pilihan;
+// do {
+//   console.log("1 Tambah · 2 Lihat · 3 Cari · 4 Keluar");
+//   pilihan = await rl.question("Pilih menu: ");
+//   switch (pilihan) {
+//     case "1":
+//       /* tambah */ break;
+//     case "2":
+//       console.table(daftar);
+//       break;
+//     case "3":
+//       /* cari */ break;
+//     case "4":
+//       console.log("Sampai jumpa!");
+//       break;
+//     default:
+//       console.log("Menu tidak dikenal");
+//   }
+// } while (pilihan !== "4");
+// rl.close();
